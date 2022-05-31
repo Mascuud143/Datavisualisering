@@ -14,6 +14,19 @@
   padding: 30px;
 }
 
+.dashboard-humidity_percent {
+  -webkit-box-shadow: 1px 2px 12px 0px #00a8cc;
+  box-shadow: 1px 1px 2px 0px #00a8cc;
+}
+.dashboard-temperature_celsius {
+  -webkit-box-shadow: 1px 2px 12px 0px #e945602c;
+  box-shadow: 1px 1px 2px 0px #e94560;
+}
+.dashboard-air_pressure {
+  -webkit-box-shadow: 1px 2px 12px 0px #5c7aea;
+  box-shadow: 1px 1px 2px 0px #5c7aea;
+}
+
 header {
   width: 100%;
   text-align: center;
@@ -133,4 +146,19 @@ footer {
   color: #fff;
   width: 200px;
   padding: 5px;
+}
+
+.highest-recorded {
+  font-size: 15px;
+  color: #fff;
+  width: max-content;
+  padding: 5px;
+
+  /* border-bottom: 0.2px solid #e94560; */
+}
+
+.thin {
+  font-weight: 300;
+  font-size: 15px;
+  margin-left: 10px;
 }

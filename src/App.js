@@ -4,8 +4,21 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import rowData from "./data.js";
 
 import Chart from "./Chart.jsx";
+import { formatLabelDate, formatToolTipDate } from "./helpers";
+const weather = {
+  temperatur: {
+    symbol: "°C",
+  },
+  luftfuktighet: {
+    symbol: "%",
+  },
+  lufttrykk: {
+    symbol: "hPa",
+  },
+};
 
 function App() {
+  // initialize the chart data
   const [options, setOptions] = useState({
     temperature_celsius: true,
     humidity_percent: false,
@@ -13,9 +26,13 @@ function App() {
   });
 
   const [data, setData] = useState([]);
+  const [currentMode, setCurrentMode] = useState("temperatur");
+  const [highestRecorded, setHighestRecorded] = useState(getHighestRecorded());
 
   useEffect(() => {
     setData([...rowData]);
+    setHighestRecorded(getHighestRecorded());
+    console.log(highestRecorded);
   }, []);
 
   function handleOptionChange(e) {
@@ -34,6 +51,10 @@ function App() {
       }
     });
 
+    //setter currentMode til det valgte
+    const dashbaord = document.querySelector(".dashboard");
+    setCurrentMode(name);
+
     switch (name) {
       case "temperatur":
         name = "temperature_celsius";
@@ -49,8 +70,8 @@ function App() {
         break;
     }
 
-    //sette andre options til false og sette den valgte til true
-    // Hvis den valgte option er allerede true, behold den
+    //setter andre options til false og den valgte til true
+    // Hvis den valgte option er allerede true, beholder den
     let newOptions = { ...options };
     for (let key in newOptions) {
       if (key !== name) {
@@ -67,14 +88,57 @@ function App() {
     });
   }
 
+  // get the highest recorded values
+  function getHighestRecorded() {
+    let highestTemp = 0;
+    let highestTempDay = "";
+    let highestHumidityDay = "";
+    let highestAirPressureDay = "";
+    let highestHum = 0;
+    let highestAir = 0;
+    for (let i = 0; i < rowData.length; i++) {
+      if (rowData[i].temperature_celsius > highestTemp) {
+        console.log(rowData[i].temperature_celsius > highestTemp);
+        highestTempDay = formatLabelDate(rowData[i].date);
+        highestTemp = rowData[i].temperature_celsius;
+      }
+      if (rowData[i].air_pressure > highestAir) {
+        highestAirPressureDay = formatLabelDate(rowData[i].date);
+        highestAir = rowData[i].air_pressure;
+      }
+      if (rowData[i].humidity_percent > highestHum) {
+        highestHumidityDay = formatLabelDate(rowData[i].date);
+        highestHum = rowData[i].humidity_percent;
+      }
+    }
+    console.log(highestTemp, highestHum, highestAir);
+    return {
+      temperatur: {
+        day: highestTempDay,
+        value: highestTemp,
+      },
+      luftfuktighet: {
+        day: highestHumidityDay,
+        value: highestHum,
+      },
+      lufttrykk: {
+        day: highestAirPressureDay,
+        value: highestAir,
+      },
+    };
+  }
+
+  console.log(getHighestRecorded());
+  console.log(highestRecorded);
+
   return (
     <div className="App">
       <header>
         <h1>
-          DIAGRAM SOM VISER <span className="bold">VÆROBSERVASJONER I MAI</span>
+          VÆROBSERVASJONER I<span className="bold"> NORDSJØEN I MAI 2022</span>
         </h1>
       </header>
-      <main className="dashboard">
+      <main className={"dashboard" + " " + `dashbaord-${currentMode}`}>
         <div className="dashboard-header">
           <form>
             <button
@@ -95,12 +159,17 @@ function App() {
             <div className="location-place">
               <MdOutlineLocationOn /> <span>Nordsjøen</span>
             </div>
-            <div className="date">Mai 2022</div>
           </div>
         </div>
-        <div className="highest-record">
-          Høyest målt: <span className="bold">100</span>
+        <div className="highest-recorded">
+          Høyest {currentMode} målt i <span className="bold">mai:</span>{" "}
+          <span className="border-bottom">
+            {highestRecorded[currentMode]["value"]}{" "}
+            {weather[currentMode].symbol}
+          </span>
+          <span className="thin">on {highestRecorded[currentMode].day}</span>
         </div>
+
         <div className="dashboard-chart">
           <Chart data={data} options={options} />
         </div>
@@ -113,21 +182,3 @@ function App() {
 }
 
 export default App;
-
-// function getHighestRecorded() {
-//   let highestTemp = 0;
-//   let highestHum = 0;
-//   let highestAir = 0;
-//   for (let i = 0; i < data.length; i++) {
-//     if (data[i].temperature_celsius > highestTemp) {
-//       highestTemp = data[i].temperature_celsius;
-//     }
-//     if (data[i].air_pressure > highestAir) {
-//       highestAir = data[i].temperature_celsius;
-//     }
-//     if (data[i].humidity_percent > highestHum) {
-//       highestHum = data[i].temperature_celsius;
-//     }
-//   }
-//   return highestTemp;
-// }

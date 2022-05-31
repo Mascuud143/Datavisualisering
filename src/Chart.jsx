@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ResponsiveContainer,
   LineChart,
@@ -11,8 +11,21 @@ import {
   Area,
 } from "recharts";
 
+import { formatLabelDate, formatToolTipDate } from "./helpers";
+
+const weather = {
+  temperature_celsius: {
+    symbol: "°C",
+  },
+  humidity_percent: {
+    symbol: "%",
+  },
+  air_pressure: {
+    symbol: "hPa",
+  },
+};
+
 export default function Chart({ data, options }) {
-  console.log(data);
   const colors = {
     temperature_celsius: {
       fill: "E94560",
@@ -28,46 +41,13 @@ export default function Chart({ data, options }) {
     },
   };
 
+  // Henter den som er True i options, for å vise den i grafen.
   const dataKeyDisplay = Object.keys(options)
     .filter((el) => options[el] === true)
     .join("");
 
-  function formatLabelDate(date) {
-    const weekDays = [
-      "Søndag",
-      "Mandag",
-      "Tirsdag",
-      "Onsdag",
-      "Torsdag",
-      "Fredag",
-      "Lørdag",
-    ];
-
-    const monthNames = [
-      "Januar",
-      "Februar",
-      "Mars",
-      "April",
-      "Mai",
-      "Juni",
-      "Juli",
-      "August",
-      "September",
-      "Oktober",
-      "November",
-      "Desember",
-    ];
-
-    const dateObj = new Date(date);
-    const month = dateObj.getMonth();
-    const day = dateObj.getDate();
-    const dateDay = dateObj.getDay();
-    const year = dateObj.getFullYear();
-    return ` ${day} ${monthNames[month]}`;
-  }
-
   return (
-    <ResponsiveContainer className="responsive" width="100%" height={300}>
+    <ResponsiveContainer className="responsive" width="96%" height={300}>
       <AreaChart data={data}>
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -89,51 +69,62 @@ export default function Chart({ data, options }) {
           fill="url(#colorUv)"
         />
         <XAxis
+          style={{ marginTop: "20px" }}
           axisLine={false}
           tickLine={false}
           tickFormatter={(d) => formatLabelDate(d)}
           dataKey="date"
-          // tick={{ fill: "#ffffff" }}
+          tickMargin={15}
         />
         <YAxis
+          allowDecimals={true}
+          tickMargin={15}
           tick={{ fill: "#fff" }}
           axisLine={false}
           tickFormatter={(value) =>
-            `${value} ${dataKeyDisplay === "humidity_percent" ? "%" : ""} `
+            `${value} ${dataKeyDisplay === "humidity_percent" ? "%" : ""}`
           }
           tickLine={false}
-          tickCount={7}
+          tickCount={dataKeyDisplay == "air_pressure" ? 3 : 5}
           dataKey={dataKeyDisplay}
         />
         <CartesianGrid opacity={0.05} vertical={false} />
-        <Tooltip
-          formatter={(f) => console.log("---" + f)}
-          content={<CustomTooltip type={dataKeyDisplay} />}
-        />
+        <Tooltip content={<CustomTooltip type={dataKeyDisplay} />} />
       </AreaChart>
     </ResponsiveContainer>
   );
 }
 
 function CustomTooltip({ payload, label, active, type }) {
-  // switch (payload[0].dataKey) {
-  //   case "temperature_celsius":
-  //     payload[0].dataKey = "Temperatur";
-  //     break;
-  //   case "humidity_percent":
-  //     payload[0].dataKey = "Luftfuktighet";
-  //     break;
-  //   case "air_pressure":
-  //     payload[0].dataKey = "Lufttrykk";
-  //     break;
-  //   default:
-  //     break;
-  // }
+  //format tooltip based on type
+  const formatedValue = (type) => {
+    let formatedLabel = "";
+    switch (type) {
+      case "temperature_celsius":
+        formatedLabel = "Temperatur";
+        return [`${payload[0].value}°C`, formatedLabel];
+        break;
+      case "humidity_percent":
+        formatedLabel = "Luftfuktighet";
+        return [`${payload[0].value}%`, formatedLabel];
+        break;
+      case "air_pressure":
+        formatedLabel = "Lufttrykk";
+        return [`${payload[0].value}hPa`, formatedLabel];
+        break;
+      default:
+        return "";
+        break;
+    }
+  };
+
   if (active) {
     return (
       <div className={`custom-tooltip ${type}-label`}>
-        <p className="label-date">{`${label}`}</p>
-        <p className="label">{`${payload[0].dataKey} : ${payload[0].value}`}</p>
+        <p className="label-date">{`${formatToolTipDate(label)}`}</p>
+        <p className="label">{`${formatedValue(type)[1]} : ${
+          formatedValue(type)[0]
+        }`}</p>
       </div>
     );
   }
