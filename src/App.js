@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+import "./App.scss";
 import { MdOutlineLocationOn } from "react-icons/md";
 import rowData from "./data.js";
 

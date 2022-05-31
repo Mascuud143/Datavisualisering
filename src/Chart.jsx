@@ -75,12 +75,12 @@ export default function Chart({ data, options }) {
           tickFormatter={(d) => formatLabelDate(d)}
           dataKey="date"
           tickMargin={15}
-          tick={{ fill: "#ccc" }}
+          tick={{ fill: "#9D9D9D" }}
         />
         <YAxis
           allowDecimals={true}
           tickMargin={15}
-          tick={{ fill: "#ccc" }}
+          tick={{ fill: "#D8D2CB" }}
           axisLine={false}
           tickFormatter={(value) =>
             `${value} ${dataKeyDisplay === "humidity_percent" ? "%" : ""}`

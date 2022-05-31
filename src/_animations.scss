@@ -1,0 +1,47 @@
+@mixin from-right($duration: 0.5s) {
+  -webkit-animation: from-right $duration forwards;
+  animation: from-right $duration forwards;
+}
+
+@mixin from-up($duration: 0.5s) {
+  -webkit-animation: from-up $duration forwards;
+  animation: from-up $duration forwards;
+}
+
+@mixin zoom-in($duration: 0.5s) {
+  -webkit-animation: zoom-in $duration forwards;
+  animation: zoom-in $duration forwards;
+}
+
+@keyframes from-right {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes from-up {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoom-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

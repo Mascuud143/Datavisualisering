@@ -1,0 +1,169 @@
+@import "_colors.scss";
+@import "_animations.scss";
+@import "_util.scss";
+
+.dashboard {
+  width: 80%;
+  height: 75%;
+  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-box-shadow: 1px 2px 12px 0px #e945602c;
+  box-shadow: 1px 1px 2px 0px $Secondary-color;
+  border-radius: 20px;
+  padding: 30px;
+
+  .dashboard-header {
+    width: 100%;
+    @include flex(row, space-between);
+  }
+}
+
+.dashboard-humidity_percent {
+  -webkit-box-shadow: 1px 2px 12px 0px $Humidity-color;
+  box-shadow: 1px 1px 2px 0px $Humidity-color;
+}
+.dashboard-temperature_celsius {
+  -webkit-box-shadow: 1px 2px 12px 0px $Temperature-color;
+  box-shadow: 1px 1px 2px 0px $Secondary-color;
+}
+.dashboard-air_pressure {
+  -webkit-box-shadow: 1px 2px 12px 0px $Tertiary-color;
+  box-shadow: 1px 1px 2px 0px lighten($color: $Tertiary-color, $amount: 0);
+}
+
+header {
+  width: 100%;
+  text-align: center;
+  color: $Quaternary-color;
+  margin: 20px;
+  font-size: 15px;
+
+  h1 {
+    font-weight: 200;
+    margin-bottom: 50px;
+    font-size: 20px;
+    @include from-right(1s);
+  }
+}
+
+.btn {
+  @include from-right(1s);
+  background-color: #1a1a2e;
+  color: $Quaternary-color;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  font-size: 20px;
+  transition: 0.2s ease-in;
+  cursor: pointer;
+
+  &.btn-primary {
+    border: 1px solid lighten($color: $Primary-color, $amount: 10);
+    cursor: pointer;
+    color: lighten($color: $Primary-color, $amount: 10);
+
+    &:hover {
+      background-color: lighten($color: $Secondary-color, $amount: 100);
+      color: $Primary-color;
+    }
+
+    &.btn-active {
+      border: 1px solid $Quaternary-color;
+      background-color: $Secondary-color;
+      color: darken($color: $Primary-color, $amount: 10);
+    }
+  }
+}
+
+footer {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  font-weight: 300;
+  text-align: center;
+  font-size: 15px;
+  color: $Quaternary-color;
+
+  position: absolute;
+  bottom: 10px;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $Secondary-color;
+  padding-bottom: 3px;
+}
+
+.location {
+  font-size: 28px;
+  color: $Quaternary-color;
+  font-weight: bold;
+  padding-bottom: 10px;
+
+  @include from-up(1s);
+}
+.date {
+  font-weight: 300;
+  font-size: 21px;
+  margin-left: 35px;
+}
+
+.custom-tooltip {
+  min-height: 50px;
+  padding: 5px 10px;
+  background-color: $Secondary-color;
+  border-radius: 5px 5px 5px 5px;
+}
+
+.humidity_percent-label {
+  background-color: $Humidity-color;
+}
+.air_pressure-label {
+  background-color: $Wind-color;
+}
+.temperature_celsius-label {
+  background-color: $Secondary-color;
+}
+
+.custom-tooltip * {
+  margin: 0;
+}
+
+.label-date {
+  margin-bottom: 10px;
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.responsive {
+  position: absolute;
+  bottom: 10px;
+}
+
+.highest-record {
+  border-radius: 10px;
+  font-size: 15px;
+  color: $Quaternary-color;
+  width: 200px;
+  padding: 5px;
+}
+
+.highest-recorded {
+  font-size: 15px;
+  color: $Quaternary-color;
+  width: max-content;
+  padding: 5px;
+}
+
+.thin {
+  font-weight: 300;
+  font-size: 15px;
+  margin-left: 10px;
+}
