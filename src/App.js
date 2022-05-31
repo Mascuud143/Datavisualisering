@@ -5,6 +5,7 @@ import rowData from "./data.js";
 
 import Chart from "./Chart.jsx";
 import { formatLabelDate, formatToolTipDate } from "./helpers";
+
 const weather = {
   temperatur: {
     symbol: "°C",

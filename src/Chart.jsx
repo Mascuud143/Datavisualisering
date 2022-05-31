@@ -69,17 +69,18 @@ export default function Chart({ data, options }) {
           fill="url(#colorUv)"
         />
         <XAxis
-          style={{ marginTop: "20px" }}
+          style={{ marginTop: "15px" }}
           axisLine={false}
           tickLine={false}
           tickFormatter={(d) => formatLabelDate(d)}
           dataKey="date"
           tickMargin={15}
+          tick={{ fill: "#ccc" }}
         />
         <YAxis
           allowDecimals={true}
           tickMargin={15}
-          tick={{ fill: "#fff" }}
+          tick={{ fill: "#ccc" }}
           axisLine={false}
           tickFormatter={(value) =>
             `${value} ${dataKeyDisplay === "humidity_percent" ? "%" : ""}`
