@@ -32,7 +32,6 @@ function App() {
   useEffect(() => {
     setData([...rowData]);
     setHighestRecorded(getHighestRecorded());
-    console.log(highestRecorded);
   }, []);
 
   function handleOptionChange(e) {
@@ -88,7 +87,7 @@ function App() {
     });
   }
 
-  // get the highest recorded values
+  // get the highest recorded values and their dates
   function getHighestRecorded() {
     let highestTemp = 0;
     let highestTempDay = "";
@@ -98,7 +97,6 @@ function App() {
     let highestAir = 0;
     for (let i = 0; i < rowData.length; i++) {
       if (rowData[i].temperature_celsius > highestTemp) {
-        console.log(rowData[i].temperature_celsius > highestTemp);
         highestTempDay = formatLabelDate(rowData[i].date);
         highestTemp = rowData[i].temperature_celsius;
       }
@@ -111,7 +109,6 @@ function App() {
         highestHum = rowData[i].humidity_percent;
       }
     }
-    console.log(highestTemp, highestHum, highestAir);
     return {
       temperatur: {
         day: highestTempDay,
@@ -127,9 +124,6 @@ function App() {
       },
     };
   }
-
-  console.log(getHighestRecorded());
-  console.log(highestRecorded);
 
   return (
     <div className="App">
@@ -162,12 +156,15 @@ function App() {
           </div>
         </div>
         <div className="highest-recorded">
-          Høyest {currentMode} målt i <span className="bold">mai:</span>{" "}
-          <span className="border-bottom">
+          Høyest {currentMode} målt <span className="bold">:</span>
+          {"  "}{" "}
+          <span className="border-bottom  bold">
             {highestRecorded[currentMode]["value"]}{" "}
             {weather[currentMode].symbol}
           </span>
-          <span className="thin">on {highestRecorded[currentMode].day}</span>
+          <span className="thin">
+            på {highestRecorded[currentMode].day.split(" ")[0]}. Mai
+          </span>
         </div>
 
         <div className="dashboard-chart">

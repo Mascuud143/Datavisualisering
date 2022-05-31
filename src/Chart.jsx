@@ -47,7 +47,7 @@ export default function Chart({ data, options }) {
     .join("");
 
   return (
-    <ResponsiveContainer className="responsive" width="96%" height={300}>
+    <ResponsiveContainer className="responsive" width="95%" height={300}>
       <AreaChart data={data}>
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">

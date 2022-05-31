@@ -1,8 +1,6 @@
 .dashboard {
   width: 80%;
   height: 70%;
-  /* background-color: #faf1e6; */
-  /* background-color: #1a1a2e; */
   position: relative;
   position: absolute;
   top: 50%;
@@ -54,6 +52,7 @@ header h1 {
 
 .btn-primary {
   border: 1px solid #343452;
+  cursor: pointer;
   color: #343452;
 }
 
@@ -99,7 +98,6 @@ footer {
   color: #fff;
   font-weight: bold;
   padding-bottom: 10px;
-  /* border-bottom: 3px solid #e94560; */
 }
 .date {
   font-weight: 300;
@@ -108,7 +106,6 @@ footer {
 }
 
 .custom-tooltip {
-  /* border: 1px solid #fff; */
   min-height: 50px;
   padding: 5px 10px;
   background-color: #e94560;
